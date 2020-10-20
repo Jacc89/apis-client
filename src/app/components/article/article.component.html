@@ -1,0 +1,106 @@
+<nav class="navbar navbar-dark bg-info">
+  <a class="navbar-brand" href="/">JACC SOTF</a>
+  <img width="40" alt="Angular Logo"
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
+</nav>
+
+<h1 class="text-center">Angular 7 CRUD Demo App</h1>
+<h3 class="text-center" *ngIf="articleIdToUpdate; else create">
+  Update Article for Id: {{ articleIdToUpdate }}
+</h3>
+<ng-template #create>
+  <h3 class="text-center">Create new article</h3>
+</ng-template>
+<div class="container">
+  <form [formGroup]="articleForm" (ngSubmit)="onArticleFormSubmit()">
+    <table class="table-striped" style="margin: 0 auto;">
+      <tr>
+        <td>Titulo</td>
+        <td>
+          <input formControlName="title" class="form-control" />
+          <label *ngIf="articleForm.get('title').invalid && processValidation" [ngClass]="'error'">
+            Titulo Requerido
+          </label>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td>Category</td>
+        <td>
+          <input formControlName="category" class="form-control" />
+          <label *ngIf="articleForm.get('category').invalid && processValidation" [ngClass]="'error'">
+            Categoria Requerida
+          </label>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td colspan="2">
+          <button class="btn btn-info btn-default" *ngIf="!articleIdToUpdate">
+            CREATE
+          </button>
+
+          <button class="btn btn-success btn-default" style="margin-right: 5%;" *ngIf="articleIdToUpdate">
+            UPDATE
+          </button>
+          <button class="btn btn-warning btn-default text-light" (click)="backToCreateArticle()"
+            *ngIf="articleIdToUpdate">
+            GO BACK
+          </button>
+        </td>
+      </tr>
+    </table>
+  </form>
+  <br />
+  <div class="text-center" *ngIf="statusCode; else processing">
+    <div *ngIf="statusCode === 201" [ngClass]="'success'">
+      Article added successfully.
+    </div>
+    <div *ngIf="statusCode === 409" [ngClass]="'success'">
+      Article already exists.
+    </div>
+    <div *ngIf="statusCode === 200" [ngClass]="'success'">
+      Article updated successfully.
+    </div>
+    <div *ngIf="statusCode === 204" [ngClass]="'success'">
+      Article deleted successfully.
+    </div>
+    <div *ngIf="statusCode === 500" [ngClass]="'error'">
+      Internal Server Error.
+    </div>
+  </div>
+</div>
+<ng-template #processing>
+  <!-- <img *ngIf="requestProcessing"  src=""><img/> -->
+</ng-template>
+<div class="container">
+  <h3 class="text-center">List of articles</h3>
+  <table class="table" style="margin: 0 auto;" *ngIf="allArticles">
+    <thead class="table table-dark">
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let article of allArticles">
+        <td>{{ article.id }}</td>
+        <td>{{ article.title }}</td>
+        <td>{{ article.category }}</td>
+        <td>
+          <button class="btn btn-success btn-default" type="button" (click)="loadArticleToEdit(article.id)">
+            Edit
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-danger btn-default" type="button" (click)="deleteArticle(article.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

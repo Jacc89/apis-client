@@ -1,0 +1,38 @@
+<nav class="navbar navbar-dark bg-info">
+  <a class="navbar-brand" href="/">JACC SOTF</a>
+  <img width="40" alt="Angular Logo"
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
+</nav>
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center">Tabla de transaciones de los articulos</h1>
+      <br>
+      <table class="table "  >
+        <thead class="table table-dark table-hover" >
+            <tr>
+                <th>Id </th>
+                <th>fecha</th>
+                <th>IP</th>
+                <th>Usuario</th>
+                <th>Estado</th>
+            </tr>
+            
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaccion of allTransacciones">
+            <td>{{ transaccion.id }}</td>
+            <td>{{ transaccion.fecha | date: 'medium' }}</td>
+            <td>{{ transaccion.ip }} <div>{{ipAddress}}</div></td>
+            <td>{{ transaccion.usuario }}</td>
+            <td>{{ transaccion.estado }}</td>        
+          </tr>
+          
+          
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
