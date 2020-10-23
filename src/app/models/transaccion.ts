@@ -4,6 +4,6 @@ export class Transaccion {
      public fecha: Date = null,
      public ip: string = null,
      public usuario: string = null,
-     public estado: string = null
+     public estado: {} = null
    ) {}
 }

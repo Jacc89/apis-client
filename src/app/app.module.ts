@@ -17,7 +17,7 @@ import { TransaccionService } from "src/app/services/transaccion.service";
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 //rutas
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
   {path: 'article', component: ArticleComponent},
   {path: 'transacciones', component: TransaccionComponent},
 ];

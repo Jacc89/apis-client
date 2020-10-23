@@ -84,14 +84,20 @@ export class ArticleComponent implements OnInit {
             // this.getAllArticles();
             // this.backToCreateArticle();
             console.log(successCode);
+            // variables para llamar el articulo en el estado
+            console.log("article?", article)
+            let articleData ={
+              title: article.title,
+              category: article.category
+            };
+
+            // variable de transaccion de articulo
             let tr: Transaccion = {
               id: null,
               fecha: new Date(),            
-              // ip: "127.0.0.0",
-              ip: this.ipAddress.ip,
+              ip: "127.0.0.0", 
               usuario: "Defaul",
-              estado: "CREAR",
-            
+              estado: "he was created  " + JSON.stringify(articleData)
             };
             this.transaccionService
               .createTransaccion(tr)
@@ -100,8 +106,6 @@ export class ArticleComponent implements OnInit {
               });
             this.getAllArticles();
             this.articleForm.reset();
-
-            // this.ipAddress.ip;
           },
           (errorCode) => (this.statusCode = errorCode)
         );
@@ -124,12 +128,19 @@ export class ArticleComponent implements OnInit {
     this.preProcessConfigurations();
     const subs = this.articleService.getArticleById(articleId).subscribe(
       (article: any) => {
-        let tr: Transaccion = {
-          estado: "UPDATE",
-          fecha: new Date(),
+        console.log("article?", article)
+            let articleData = {
+              id: article.id== 0, 
+              title: article.title = article.title,
+              category: article.category = article.category
+            };
+
+        let tr: Transaccion = {         
           id: null,
-          ip: this.ipAddress.ip,
+          fecha: new Date(),         
+          ip: "127.0.0.0",        
           usuario: "Defaul",
+          estado: " Se actualizo "+ JSON.stringify(articleData),
         };
         this.transaccionService
           .createTransaccion(tr)
@@ -158,12 +169,18 @@ export class ArticleComponent implements OnInit {
         this.statusCode = 204;
         this.getAllArticles();
         this.backToCreateArticle();
+
+        console.log("article?", articleId)
+            let articleData = {
+              articleId
+            };
+        let ipAddrees = this.getIP();
         let tr: Transaccion = {
-          estado: "ELIMINAR",
-          fecha: new Date(),
           id: null,
-          ip: this.ipAddress.ip,
+          fecha: new Date(),
+          ip: "127.0.0.0",
           usuario: "Defaul",
+          estado:  " Se elimino "+ JSON.stringify(articleData),
         };
         this.transaccionService
           .createTransaccion(tr)
@@ -174,6 +191,7 @@ export class ArticleComponent implements OnInit {
       (errorCode) => (this.statusCode = errorCode)
     );
   }
+  //  Funcion ip
   getIP()  
   {  
     this.articleService.getIPAddress().subscribe((res:any)=>{  

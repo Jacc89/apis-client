@@ -10,8 +10,8 @@ import { Transaccion } from "../models/transaccion";
 })
 export class TransaccionService {
   //URL for CRUD operations
-  // transaccionUrl = "http://localhost:3000";
-  transaccionUrl = "http://server3.azlogica.com:3200";
+  transaccionUrl = "http://localhost:3000";
+  // transaccionUrl = "http://server3.azlogica.com:3200";
   //Create constructor to get Http instance
   constructor(protected http: HttpClient) {}
 
@@ -29,6 +29,16 @@ export class TransaccionService {
       JSON.stringify(transaccion),
       { headers: headers }
     );
+  }
+   //Update article
+   updateArticle(transaccion: Transaccion): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set("Content-Type", "application/json");
+    return this.http.put<any>(
+      this.transaccionUrl + "/transaccion/update-transaccion",
+      JSON.stringify(transaccion),
+      { headers: headers }
+    );   
   }
    //  la ip
     getIPAddress(){  

@@ -6,16 +6,17 @@ import { catchError, retry } from 'rxjs/operators';
 import { Article } from "../models/article";
 import { TransaccionComponent } from "../components/transaccion/transaccion.component";
 import { Transaccion } from "../models/transaccion";
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ArticleService {
   //URL for CRUD operations
-  // articleUrl = "http://localhost:3000";
-  articleUrl = "http://server3.azlogica.com:3200";
+  articleUrl = "http://localhost:3000";
+  // articleUrl = "http://server3.azlogica.com:3200";
   transaccion: any;
  
   //Create constructor to get Http instancenpm start
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, router:Router) {}
 
   //Fetch all articles
 
