@@ -21,7 +21,7 @@ export class ArticleService {
   //Fetch all articles
 
   getAllArticles() {
-    console.log("funcional");
+    console.log("getAllarticle");
     return this.http.get(`${this.articleUrl}/article/get-article`);
   }
   //Create article
@@ -48,9 +48,15 @@ export class ArticleService {
   }
   //Update article
   updateArticle(article: Article) {
-    const cpHeaders = new Headers({ "Content-Type": "application/json" });
+    // const cpHeaders = new Headers({ "Content-Type": "application/json" });
     // let options = new HttpRequest({ headers: cpHeaders });
-    return this.http.put(this.articleUrl + "/article/update-article", article);
+    let headers = new HttpHeaders();
+    headers = headers.set("Content-Type", "application/json");
+    return this.http.put(
+      this.articleUrl + "/article/update-article",
+      JSON.stringify(article),
+      { headers: headers }
+    );
   }
   //Delete article
   deleteArticleById(articleId: string) {

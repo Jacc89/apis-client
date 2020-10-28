@@ -7,9 +7,11 @@ import { TransaccionService } from "src/app/services/transaccion.service";
 import { Transaccion } from "../../models/transaccion";
 import { TransaccionComponent } from "../transaccion/transaccion.component";
 import { subscribeOn } from "rxjs/operators";
-import { Console } from '@angular/core/src/console';
-import { ipv4 } from 'ipify2';
-import { ip } from 'address';
+import { Console } from "@angular/core/src/console";
+import { ipv4 } from "ipify2";
+import { ip } from "address";
+
+
 
 @Component({
   selector: "app-article",
@@ -28,7 +30,6 @@ export class ArticleComponent implements OnInit {
   articleForm = new FormGroup({
     title: new FormControl("", Validators.required),
     category: new FormControl("", Validators.required),
-  
   });
   ipAddress: any;
 
@@ -45,8 +46,10 @@ export class ArticleComponent implements OnInit {
   // Fetch all articles
 
   getAllArticles() {
-    const subs = this.articleService.getAllArticles().subscribe((array: any) => {
-      let articles: Article[] = [];
+    const subs = this.articleService
+      .getAllArticles()
+      .subscribe((array: any) => {
+        let articles: Article[] = [];
         for (let index = 0; index < array.length; index++) {
           let article = array[index] as Article;
           articles.push(article);
@@ -61,9 +64,9 @@ export class ArticleComponent implements OnInit {
           }
           return 0;
         });
-      // (this.allArticles = data),
-      //   (errorCode: number) => (this.statusCode = errorCode);
-    });
+        // (this.allArticles = data),
+        //   (errorCode: number) => (this.statusCode = errorCode);
+      });
   }
   // Handle create and update article
   onArticleFormSubmit() {
@@ -85,19 +88,19 @@ export class ArticleComponent implements OnInit {
             // this.backToCreateArticle();
             console.log(successCode);
             // variables para llamar el articulo en el estado
-            console.log("article?", article)
-            let articleData ={
+            console.log("article?", article);
+            let articleData = {
               title: article.title,
-              category: article.category
+              category: article.category,
             };
 
             // variable de transaccion de articulo
             let tr: Transaccion = {
               id: null,
-              fecha: new Date(),            
-              ip: "127.0.0.0", 
+              fecha: new Date(),
+              ip: "127.0.0.0",
               usuario: "Defaul",
-              estado: "he was created  " + JSON.stringify(articleData)
+              estado: "he was created  " + JSON.stringify(articleData),
             };
             this.transaccionService
               .createTransaccion(tr)
@@ -128,27 +131,31 @@ export class ArticleComponent implements OnInit {
     this.preProcessConfigurations();
     const subs = this.articleService.getArticleById(articleId).subscribe(
       (article: any) => {
-        console.log("article?", article)
-            let articleData = {
-              id: article.id== 0, 
-              title: article.title = article.title,
-              category: article.category = article.category
-            };
-
-        let tr: Transaccion = {         
-          id: null,
-          fecha: new Date(),         
-          ip: "127.0.0.0",        
-          usuario: "Defaul",
-          estado: " Se actualizo "+ JSON.stringify(articleData),
+        console.log("article?", article);
+        let articleData = {
+          id: article.id,
+          title: article.title ,
+          category: article.category ,
         };
+        let tr: Transaccion = {
+          id: null,
+          fecha: new Date(),
+          ip: "127.0.0.0",
+          usuario: "Defaul",
+          estado: " Se actualizo " + JSON.stringify( articleData),
+        };
+
         this.transaccionService
           .createTransaccion(tr)
-          .subscribe((transaccion: Transaccion) => {
-            console.info(transaccion);
+          .subscribe((tr: Transaccion) => {
+          console.log(tr);
+          this.articleIdToUpdate = article.id;
+          this.articleIdToUpdate = article;
           });
-        console.log(article, "poiuytre");
+
+        console.log(article, "poiuytre");      
         this.articleIdToUpdate = article.id;
+        this.articleIdToUpdate = article;
         this.articleForm.setValue({
           title: article.title,
           category: article.category,
@@ -170,17 +177,17 @@ export class ArticleComponent implements OnInit {
         this.getAllArticles();
         this.backToCreateArticle();
 
-        console.log("article?", articleId)
-            let articleData = {
-              articleId
-            };
+        console.log("article?", articleId);
+        let articleData = {
+          articleId,
+        };
         let ipAddrees = this.getIP();
         let tr: Transaccion = {
           id: null,
           fecha: new Date(),
           ip: "127.0.0.0",
           usuario: "Defaul",
-          estado:  " Se elimino "+ JSON.stringify(articleData),
+          estado: " Se elimino " + JSON.stringify(articleData),
         };
         this.transaccionService
           .createTransaccion(tr)
@@ -192,12 +199,11 @@ export class ArticleComponent implements OnInit {
     );
   }
   //  Funcion ip
-  getIP()  
-  {  
-    this.articleService.getIPAddress().subscribe((res:any)=>{  
-      this.ipAddress=res.ip;  
-    });  
-  }  
+  getIP() {
+    this.articleService.getIPAddress().subscribe((res: any) => {
+      this.ipAddress = res.ip;
+    });
+  }
   // Perform preliminary processing configurations
   preProcessConfigurations() {
     this.statusCode = null;
@@ -209,5 +215,4 @@ export class ArticleComponent implements OnInit {
     this.articleForm.reset();
     this.processValidation = false;
   }
- 
 }

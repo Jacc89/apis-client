@@ -31,8 +31,8 @@ export class TransaccionService {
     );
   }
    //Update article
-   updateArticle(transaccion: Transaccion): Observable<any> {
-    let headers = new HttpHeaders();
+   updateTransaccion(transaccion: Transaccion): Observable<any> {
+    let headers = new HttpHeaders()
     headers = headers.set("Content-Type", "application/json");
     return this.http.put<any>(
       this.transaccionUrl + "/transaccion/update-transaccion",
